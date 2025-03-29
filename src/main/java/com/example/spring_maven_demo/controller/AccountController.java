@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -34,7 +36,21 @@ public class AccountController {
     public Account createAccount(@RequestBody Account account) {
         return accountRepository.save(account);
     }
+    
+    @PostMapping("/create")
+    public Account createAccount2() {
+        
+        // Создаем новый объект Account
+        long count = accountRepository.count();
+        String name = "user " + count;
+        BigDecimal amount = new BigDecimal(count);
+        Account newAccount = new Account(name, amount);
+      
+        // Сохраняем в базу данных
+        return accountRepository.save(newAccount);
+    }
 
+   
     // Обновление счёта
     @PutMapping("/{id}")
     public Account updateAccount(@PathVariable Long id, @RequestBody Account accountDetails) {
