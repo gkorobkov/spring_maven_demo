@@ -1,7 +1,6 @@
 package com.example.spring_maven_demo.repository;
 
 import com.example.spring_maven_demo.entity.Account;
-import org.springframework.data.jpa.repository.NativeQuery;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

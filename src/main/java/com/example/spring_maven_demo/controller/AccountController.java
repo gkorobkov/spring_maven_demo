@@ -3,13 +3,11 @@ package com.example.spring_maven_demo.controller;
 
 import com.example.spring_maven_demo.entity.Account;
 import com.example.spring_maven_demo.repository.AccountRepository;
+import com.example.spring_maven_demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.List;
 
 @RestController
@@ -18,6 +16,8 @@ public class AccountController {
 
     @Autowired
     private AccountRepository accountRepository;
+    
+    private AccountService accountService;
 
     // Получение всех счетов
     @GetMapping
@@ -40,14 +40,24 @@ public class AccountController {
     @PostMapping("/create")
     public Account createAccount2() {
         
+        //return accountService.createAccount();
+        /*
+2025-03-30T07:56:22.186+03:00 ERROR 20100 --- [spring-maven-demo] [nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NullPointerException: Cannot invoke "com.example.spring_maven_demo.repository.AccountRepository.count()" because "this.accountRepository" is null] with root cause
+
+java.lang.NullPointerException: Cannot invoke "com.example.spring_maven_demo.repository.AccountRepository.count()" because "this.accountRepository" is null
+        at com.example.spring_maven_demo.service.AccountService.createAccount(AccountService.java:20) ~[classes/:na]
+         * 
+         */
+
         // Создаем новый объект Account
-        long count = accountRepository.count();
+        long count = accountRepository.count() + 1;
         String name = "user " + count;
         BigDecimal amount = new BigDecimal(count);
         Account newAccount = new Account(name, amount);
       
         // Сохраняем в базу данных
         return accountRepository.save(newAccount);
+
     }
 
    
