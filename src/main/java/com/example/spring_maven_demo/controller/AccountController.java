@@ -3,7 +3,7 @@ package com.example.spring_maven_demo.controller;
 
 import com.example.spring_maven_demo.entity.Account;
 import com.example.spring_maven_demo.repository.AccountRepository;
-import com.example.spring_maven_demo.service.AccountService;
+//import com.example.spring_maven_demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
     
-    private AccountService accountService;
+    //private AccountService accountService;
 
     // Получение всех счетов
     @GetMapping
