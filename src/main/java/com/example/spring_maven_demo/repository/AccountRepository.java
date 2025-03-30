@@ -2,7 +2,10 @@ package com.example.spring_maven_demo.repository;
 
 import com.example.spring_maven_demo.entity.Account;
 
+import jakarta.persistence.LockModeType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -36,6 +39,13 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     //@Query("SELECT a FROM Account a WHERE a.id = ?1 for update skip locked")
     //Optional<Account> findByIdWithSkipLock(Long id);
 
+    // использует нативный SQL-запрос с FOR UPDATE SKIP LOCKED
     @Query(value = "SELECT * FROM accounts WHERE id = ?1 FOR UPDATE SKIP LOCKED", nativeQuery = true) //FOR UPDATE SKIP LOCKED
     Optional<Account> findByIdWithSkipLock(Long id);
+
+    // использует пессимистичную блокировку строки при чтении.
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query(value = "SELECT a FROM Account a WHERE a.id = ?1")
+    Optional<Account> findByIdForUpdate(Long id);
+
 }

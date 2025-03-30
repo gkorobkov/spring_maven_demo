@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,15 +52,24 @@ public class AccountService {
     }
 
     public Optional<Account> findByIdIfExists(Long id) {
-        return accountRepository.findByIdWithSkipLock(id);
+        return accountRepository.findById(id);
     }
 
     public Account save(Account account) {
         return accountRepository.save(account);
     }
 
-    public Optional<Account> updateAccountIfExists(Long id, Account accountDetails, Integer sleep) throws InterruptedException {
-        Optional<Account> account = findByIdIfExists(id);
+    @Transactional
+    public Optional<Account> updateAccountWithSkipLock(Long id, Account accountDetails, Integer sleep) throws InterruptedException {
+        return updateAccountWithLock(accountRepository.findByIdWithSkipLock(id), accountDetails, sleep);
+    }
+
+    @Transactional
+    public Optional<Account> updateAccountWithPessimisticLock(Long id, Account accountDetails, Integer sleep) throws InterruptedException {
+        return updateAccountWithLock(accountRepository.findByIdForUpdate(id), accountDetails, sleep);
+    }
+
+    private Optional<Account> updateAccountWithLock(Optional<Account> account, Account accountDetails, Integer sleep) throws InterruptedException {
         if (!account.isPresent()) {
             return null;
         }

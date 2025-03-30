@@ -42,10 +42,17 @@ public class AccountController {
     }
 
     @PutMapping("/skiplocked/{id}")
-    public Optional<Account> updateAccountIfExists(@PathVariable Long id,
+    public Optional<Account> updateAccountWithSkipLocked(@PathVariable Long id,
         @RequestParam(required = false) Integer sleep, 
         @RequestBody Account accountDetails) throws InterruptedException {
-        return accountService.updateAccountIfExists(id, accountDetails, sleep);
+        return accountService.updateAccountWithSkipLock(id, accountDetails, sleep);
+    }
+
+    @PutMapping("/PessimisticLock/{id}")
+    public Optional<Account> updateAccountWithPessimisticLock(@PathVariable Long id,
+        @RequestParam(required = false) Integer sleep, 
+        @RequestBody Account accountDetails) throws InterruptedException {
+        return accountService.updateAccountWithPessimisticLock(id, accountDetails, sleep);
     }
 
     // Удаление счёта
