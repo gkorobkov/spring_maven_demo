@@ -1,18 +1,21 @@
 package com.example.spring_maven_demo.repository;
 
 import com.example.spring_maven_demo.entity.Account;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface AccountRepository extends CrudRepository<Account, Long> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    //@NativeQuery(value = "")
-    //Account getAccountWithSkipLock() ;
-
+    // @NativeQuery(value = "")
+    // Account getAccountWithSkipLock() ;
 
     // Поиск по клиенту
     List<Account> findByClient(String client);
@@ -27,7 +30,12 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     List<Account> findByClientLike(String searchTerm);
 
     // Поиск по нескольким условиям
-    @Query("SELECT a FROM Account a WHERE LOWER(a.client) LIKE %?1% OR a.amount = ?2")
+    @Query("SELECT a FROM Account a WHERE LOWER(a.client) LIKE %?1% OR a.amount = ?2 ") //FOR UPDATE SKIP LOCKED
     List<Account> findByClientOrAmount(String clientSearch, Double amount);
-}
 
+    //@Query("SELECT a FROM Account a WHERE a.id = ?1 for update skip locked")
+    //Optional<Account> findByIdWithSkipLock(Long id);
+
+    @Query(value = "SELECT * FROM accounts WHERE id = ?1 FOR UPDATE SKIP LOCKED", nativeQuery = true) //FOR UPDATE SKIP LOCKED
+    Optional<Account> findByIdWithSkipLock(Long id);
+}

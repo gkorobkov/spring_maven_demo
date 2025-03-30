@@ -1,12 +1,12 @@
 package com.example.spring_maven_demo.controller;
 
-
 import com.example.spring_maven_demo.entity.Account;
 import com.example.spring_maven_demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/account")
@@ -24,7 +24,7 @@ public class AccountController {
     // Получение счёта по ID
     @GetMapping("/{id}")
     public Account getAccount(@PathVariable Long id) {
-        return accountService.findById(id);
+        return accountService.getById(id);
     }
 
     // Создание нового счёта
@@ -32,12 +32,20 @@ public class AccountController {
     public Account createAccount(@RequestBody Account account) {
         return accountService.save(account);
     }
-      
+
     // Обновление счёта
     @PutMapping("/{id}")
-    public Account updateAccount(@PathVariable Long id, @RequestBody Account accountDetails) {
-        
-        return accountService.updateAccount(id, accountDetails);
+    public Account updateAccount(@PathVariable Long id,
+        @RequestParam(required = false) Integer sleep, 
+        @RequestBody Account accountDetails) throws InterruptedException {
+        return accountService.updateAccount(id, accountDetails, sleep);
+    }
+
+    @PutMapping("/skiplocked/{id}")
+    public Optional<Account> updateAccountIfExists(@PathVariable Long id,
+        @RequestParam(required = false) Integer sleep, 
+        @RequestBody Account accountDetails) throws InterruptedException {
+        return accountService.updateAccountIfExists(id, accountDetails, sleep);
     }
 
     // Удаление счёта
@@ -76,11 +84,9 @@ public class AccountController {
     @GetMapping("/search/mixed")
     public List<Account> findByMixedCriteria(
             @RequestParam(required = false) String client,
-            @RequestParam(required = false) Double amount
-    ) {
+            @RequestParam(required = false) Double amount) {
 
         return accountService.findByMixedCriteria(client, amount);
     }
 
 }
-

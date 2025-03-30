@@ -28,7 +28,8 @@ public class Account {
 
     // Конструкторы, геттеры и сеттеры
 
-    protected Account() {}
+    protected Account() {
+    }
 
     public Account(String client, BigDecimal amount) {
         this.client = client;
@@ -59,4 +60,3 @@ public class Account {
         this.amount = amount;
     }
 }
-
