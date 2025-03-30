@@ -48,7 +48,7 @@ public class AccountController {
         return accountService.updateAccountWithSkipLock(id, accountDetails, sleep);
     }
 
-    @PutMapping("/PessimisticLock/{id}")
+    @PutMapping("/pessimistic-lock/{id}")
     public Optional<Account> updateAccountWithPessimisticLock(@PathVariable Long id,
         @RequestParam(required = false) Integer sleep, 
         @RequestBody Account accountDetails) throws InterruptedException {
