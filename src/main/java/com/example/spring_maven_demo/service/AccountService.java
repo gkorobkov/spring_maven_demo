@@ -5,13 +5,16 @@ import com.example.spring_maven_demo.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
 
+    @Autowired
     private AccountRepository accountRepository;
 
     public Account createAccount() {
@@ -26,4 +29,55 @@ public class AccountService {
         return accountRepository.save(newAccount);
     }
 
+    public List<Account> findByMixedCriteria(String client, Double amount)
+    {
+        if (client != null && amount == null) {
+            return accountRepository.findByClient(client);
+        } else if (client == null && amount != null) {
+            return accountRepository.findByAmount(amount);
+        } else if (client != null && amount != null) {
+            return accountRepository.findByClientOrAmount(client, amount);
+        } else {
+            throw new IllegalArgumentException("At least one parameter must be provided");
+        }
+    }
+
+    public List<Account> findAll() {
+        return (List<Account>) accountRepository.findAll();
+    }
+
+    public Account findById(Long id) {
+        return accountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account not found"));
+    }
+
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
+    public Account updateAccount(Long id, Account accountDetails) {
+        Account account = findById(id);
+        account.setClient(accountDetails.getClient());
+        account.setAmount(accountDetails.getAmount());
+        return accountRepository.save(account);
+    }
+
+    public void deleteById(Long id) {
+        accountRepository.deleteById(id);
+    }
+
+    public List<Account> findByClient(String client) {
+        return accountRepository.findByClient(client);
+    }
+
+    public List<Account> findByAmount(Double amount) {
+        return accountRepository.findByAmount(amount);
+    }
+
+    public List<Account> findByAmountBetween(Double minAmount, Double maxAmount) {
+        return accountRepository.findByAmountBetween(minAmount, maxAmount);
+    }
+
+    public List<Account> findByClientLike(String term) {
+        return accountRepository.findByClientLike(term);
+    }
 }
