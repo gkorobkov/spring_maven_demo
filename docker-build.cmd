@@ -1,1 +1,1 @@
- docker build -t spring-maven-demo-app .
+ docker build -t img-spring-maven-demo .
