@@ -1,0 +1,1 @@
+ docker run -it --net container:app-spring-maven-demo nicolaka/netshoot
