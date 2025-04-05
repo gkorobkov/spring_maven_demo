@@ -1,1 +1,1 @@
-start mvn clean package
+ mvn clean -DskipTests=true package

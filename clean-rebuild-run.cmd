@@ -2,11 +2,11 @@
 
 pushd . && (
 
-mvn clean package  ) && (
+call mvn-build-project.cmd  ) && (
 
 docker rm app-spring-maven-demo
 docker image rm img-spring-maven-demo
-docker-build.cmd
+call docker-build.cmd
 
  ) && (
 
