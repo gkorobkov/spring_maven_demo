@@ -2,12 +2,11 @@ FROM openjdk:21-jdk-slim
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 WORKDIR /
-ENV POSTGRES_HOST=${POSTGRES_HOST}
-ENV POSTGRES_PORT=${POSTGRES_PORT}
-ENV POSTGRES_DB=${POSTGRES_DB}
-ENV POSTGRES_USER=${POSTGRES_USER}
-ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+ENV env-dockerfile-property-1=env-dockerfile-val1
+ENV env-dockerfile-property-2=env-dockerfile-val2
+ENV env-file-property-2=${env-file-property-2}
+ENV env-file-property-3=env-dockerfile-val3
+
 ENTRYPOINT ["java","-jar","/app.jar"]
-#ENTRYPOINT ["sleep 600"]
 
 EXPOSE 8080
