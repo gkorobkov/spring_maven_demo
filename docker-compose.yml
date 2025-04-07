@@ -1,10 +1,12 @@
 services:
 
-  app:
+  api:
+    image: img-spring-maven-demo
+    container_name: app-spring-maven-demo
     build: .
     
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_DB}:${POSTGRES_HOST}/${POSTGRES_DB}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       env-file-property-3: ${env-file-property-3}
