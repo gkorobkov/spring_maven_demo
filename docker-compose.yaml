@@ -1,6 +1,7 @@
+name: "gk-test-compose-file"
 services:
   db:
-      image: postgres:12
+      image: postgres:17.4
       container_name: postgres-db
       volumes: 
           - db-data:/var/lib/postgresql/data
@@ -20,7 +21,13 @@ services:
       env-file-property-3: ${env-file-property-3}
       env-dockerfile-property-2: ${env-dockerfile-property-2}
       env-composefile-property-1: env-composefile-val-1
-      
+    volumes: 
+    - /home/gkorobkov/app/test-app-modules
+    - ./api:/home/gkorobkov/app/test-app
 
     ports:
       - "8080:8080"
+
+volumes:
+    db-data:
+        name: data-postgres-db-vlm
