@@ -2,18 +2,16 @@
 
 pushd . && (
 
-call mvn-build-project.cmd  ) && (
+call mvn-build-project.cmd    ) && (
 
-rem docker rm app-spring-maven-demo
-rem docker image rm img-spring-maven-demo
-
-call docker-compose-down.cmd
+call docker-compose-down.cmd 
 
  ) && (
 
-start docker-compose-up.cmd
+docker rm app-spring-maven-demo
+docker image rm img-spring-maven-demo
 
- ) && (
+start docker-compose-up.cmd   ) && (
 
 popd )
 
