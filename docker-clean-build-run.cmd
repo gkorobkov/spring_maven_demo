@@ -14,5 +14,3 @@ rem docker rm app-spring-maven-demo
 start docker-compose-up.cmd   ) && (
 
 popd )
-
-

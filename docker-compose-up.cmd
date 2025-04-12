@@ -3,4 +3,3 @@ rem  docker run --name app-spring-maven-demo   -p 8080:8080   --env-file=.env   
 rem docker-compose --file docker-compose.yaml up --detach
 
 docker-compose up --detach api
-
