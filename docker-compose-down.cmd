@@ -1,3 +1,4 @@
+@ECHO OFF
 
-docker-compose down --volumes
-
+rem docker-compose down --volumes
+docker-compose rm -s -f api
