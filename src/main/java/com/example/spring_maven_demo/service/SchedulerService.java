@@ -20,8 +20,8 @@ public class SchedulerService {
         System.out.println("Запланированные задачи:");
     }
 
-    private long delay1 = 1000L; // Начальная задержка в миллисекундах
-    private long delay2 = 1000L; // Начальная задержка в миллисекундах
+    private long delay1 = 3000L; // Начальная задержка в миллисекундах
+    private long delay2 = 3000L; // Начальная задержка в миллисекундах
     private static int count1 = 0;
     private static int count2 = 0;
 
