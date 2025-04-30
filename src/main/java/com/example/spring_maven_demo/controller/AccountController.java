@@ -17,6 +17,7 @@ public class AccountController {
 
     // Получение всех счетов
     @GetMapping
+    @CrossOrigin(origins = "*")
     public List<Account> getAllAccounts() {
         return (List<Account>) accountService.findAll();
     }
