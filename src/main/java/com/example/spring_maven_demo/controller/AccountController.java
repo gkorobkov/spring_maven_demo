@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/account")
+@CrossOrigin(origins = "*")
 public class AccountController {
 
     @Autowired
@@ -17,7 +18,6 @@ public class AccountController {
 
     // Получение всех счетов
     @GetMapping
-    @CrossOrigin(origins = "*")
     public List<Account> getAllAccounts() {
         return (List<Account>) accountService.findAll();
     }
