@@ -9,6 +9,8 @@ services:
         - "${POSTGRES_PORT}:5432" 
 
   api:
+    depends_on:
+    - db
     image: img-spring-maven-demo
     container_name: app-spring-maven-demo
     build: .
